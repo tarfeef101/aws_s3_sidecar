@@ -15,5 +15,6 @@ services:
       - AWS_SESSION_TOKEN=
       - FILES=
       - BUCKET=
+      - BASENAME=
     volumes:
       - ./mount:/opt
