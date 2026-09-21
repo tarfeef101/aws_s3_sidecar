@@ -1,0 +1,22 @@
+services:
+  sidecar:
+    image: local-build:tmp
+    environment:
+      - FILES=readme.html
+      - BUCKET=esa-worldcover
+      - NO_SIGN_REQUEST=1
+    volumes:
+      - shared:/opt
+
+  web:
+    image: python:3.12-alpine
+    command: python -m http.server 8000 --directory /opt
+    depends_on:
+      - sidecar
+    volumes:
+      - shared:/opt
+    ports:
+      - "8000:8000"
+
+volumes:
+  shared:
