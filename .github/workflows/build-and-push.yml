@@ -64,7 +64,7 @@ jobs:
         if: github.event_name == 'schedule'
         id: exists
         run: |
-          set -euo pipefail
+          set -u # no pipefail or e so not finding the tag won't crash the step
           token=$(curl -sf "https://hub.docker.com/v2/repositories/${{ env.IMAGE }}/tags/${{ steps.versions.outputs.tag }}/" | awk -F'"' '/"name"/{print $4}')
           if [[ -n "$token" && "$token" != "null" ]]; then
             echo "exists=true" >> "$GITHUB_OUTPUT"
